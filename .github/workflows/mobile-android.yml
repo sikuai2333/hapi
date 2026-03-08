@@ -72,6 +72,12 @@ jobs:
                       echo "artifact_path=mobile/android/app/build/outputs/apk/debug/app-debug.apk" >> "$GITHUB_OUTPUT"
                   fi
 
+            - name: Prepare Gradle wrapper
+              run: |
+                  sed -i 's/\r$//' gradlew
+                  chmod +x gradlew
+              working-directory: mobile/android
+
             - name: Build APK
               run: ./gradlew ${{ steps.resolve.outputs.gradle_task }}
               working-directory: mobile/android
